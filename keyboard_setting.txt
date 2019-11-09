@@ -1,0 +1,25 @@
+# GUIを使ったキーボードレイアウト変更
+(Linux)
+手順１：US配列をJP配列に変更する（ubuntu18.04では Fcitx + Mozcをインストールする事で解決した）
+参考サイトhttps://kledgeb.blogspot.com/2018/04/ubuntu-unity-1804-13-fcitx-mozc.html
+
+手順２：GNOMEを使うとGUIでキーボードでcapslockをctrlに変更・入力ソースの切り替えをカスタマイズできる。GNOME Teakアプリケーションをubuntuソフトウェアからダウンロードして、キーボード > 追加のレイアウトから変更する。
+
+手順３：窓使いの憂鬱で，更にカスタマイズ．設定ファイルは，.mayuに記載．
+参考サイトhttps://symfoware.blog.fc2.com/blog-entry-1938.html
+
+(Mac)
+
+
+(windows)
+key change等の窓の社から出ているものを利用する。
+
+# コマンド使ったレイアウト確(但し挙動がうまく行かない場合もあるので参考にならないかも(
+To confirm current layout, you can use the following command,
+`localectl status`
+
+To set jp106 keymap, 
+`localectl set-keymap jp106`
+
+The place of setting file is  "/etc/vconsole.conf"
+

@@ -1,0 +1,5 @@
+# Vimの設定は.vimrcから
+場所：
+
+# 初期装備
+こちら(https://qiita.com/morikooooo/items/9fd41bcd8d1ce9170301)の設定ファイルを利用した．

@@ -1,5 +1,7 @@
 # Vimの設定は.vimrcから
-場所：
+場所："~/.vimrc"
+
+注意："etc/vim/vimrc"にある設定ファイルは全ユーザーに共有されるsettingである．個別に管理したいなら"~/"以下に配置する事．
 
 # 初期装備
 こちら(https://qiita.com/morikooooo/items/9fd41bcd8d1ce9170301)の設定ファイルを利用した．

@@ -1,7 +1,18 @@
+$ todo
+* luaの有効化（vim --version | grep lua）でluaが+になっているようにする．
+ -> これにより補完機能が使えるように
+* agのインストール
+ -> ファイルキャッシュが溜まっても自動で削除してくれる．
+
 # Vimの設定は.vimrcから
 場所："~/.vimrc"
 
 注意："etc/vim/vimrc"にある設定ファイルは全ユーザーに共有されるsettingである．個別に管理したいなら"~/"以下に配置する事．
 
-# 初期装備
-こちら(https://qiita.com/morikooooo/items/9fd41bcd8d1ce9170301)の設定ファイルを利用した．
+# Vimプラグインの活用
+・vimrc の基本設定と同じく，.vimrcに書くだけ．NeoBundleというプラグイン管理のためのプラグインを入れると良い．
+
+# 私の.vimrc
+* .vimrcに記載している．
+* こちら(https://qiita.com/morikooooo/items/9fd41bcd8d1ce9170301)
+* こちら(https://qiita.com/ahiruman5/items/4f3c845500c172a02935)

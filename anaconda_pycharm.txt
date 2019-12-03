@@ -1,0 +1,5 @@
+#anacondaのインストール
+* こちら（https://www.anaconda.com/distribution/）からpython3系またはpython2系を選択してインストール．シェルスクリプトがダウンロードされるので，`bash **.sh`を実行する．
+
+#Pycharm
+* こちら（https://www.jetbrains.com/pycharm/promo/anaconda/）からAnacondaに対応したPycharmがインストール可能

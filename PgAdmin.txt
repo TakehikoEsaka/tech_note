@@ -1,0 +1,3 @@
+# PgAdmin
+* PostgresSQLにGUIで接続出来るツール．
+sudo apt-get install pgadmin4 pgadmin4-apache2

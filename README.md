@@ -11,7 +11,9 @@ Initial setups for ubuntu
 	- docker-compose
 	- ibus-mozc(for Japabese charastaric)
 	- heroku(use "snap" command for installing)
-	
+	- PgAdmin
+    - Anaconda
+
 - Installed Software from Ubuntu Store
 	- Gitkraken
 

@@ -6,7 +6,26 @@
 手順２：GNOMEを使うとGUIでキーボードでcapslockをctrlに変更・入力ソースの切り替えをカスタマイズできる。GNOME Teakアプリケーションをubuntuソフトウェアからダウンロードして、キーボード > 追加のレイアウトから変更する。
 
 手順３：窓使いの憂鬱で，更にカスタマイズ．設定ファイルは，.mayuに記載．
-参考サイトhttps://symfoware.blog.fc2.com/blog-entry-1938.html
+this site(https://symfoware.blog.fc2.com/blog-entry-2150.html) is useful to install on ubuntu18.04
+
+* configureを実行
+sudo ./configure --with-boost-libdir=/usr/lib/x86_64-linux-gnu/
+
+* makeを実行（automakeを事前にapt-getでinstallしておく）
+※If the following error occur, you have to rewrite source code
+
+```(Error)
+vkeytable.cpp:343:1: error: narrowing conversion of ‘-1’ from ‘int’ to ‘u_int8 {aka unsigned char}’ inside { } [-Wnarrowing]
+};
+^
+```
+
+```(modified)
+- #define VK(name) { -1, _T(#name) }
++ #define VK(name) { (u_int8)-1, _T(#name) }
+```
+* make installを実行
+* you will enable service using "systmctl" command
 
 (Mac)
 

@@ -1,0 +1,4 @@
+You can set tmux using ".tmux.conf" file, which is located this directory.
+
+# Apply setting
+tmux source ~/.tmux.conf

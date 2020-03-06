@@ -1,0 +1,59 @@
+# 単語
+- instance : VM (virtual machine)の事でマシンを指す．
+- GCP(google cloud platform) : 統合型サービスの事. Some of popular service in GCP are Google Engine Engine (GCE), Google App Ejngine(GAE).
+- GCC(google cloud console) : GCP専用コンソールの事．コンソールとは入出力装置の事．
+- Google Cloud Engine (GCE): IaaS(infrastructure as a service)でグーグルのインフラを使ったマシンを使用出来る．
+- GCCコンソール上では，プロジェクトを作成（１つ以上のインスタンスが存在)可能で，「ゾーン」「オペレーティングシステム」「マシンタイプ」を指定する．各プロジェクトはVPCネットワークを持つ事が出来て外部とのやり取りが可能．
+- VPC (Virtual Private Cloud)：仮想ネットワークを意味する．ポートがついた箱のようなものでこれに入れると外部との通信が可能だと考えると良い．
+
+# gloudコマンド
+ ##導入方法
+- Google Cloud SDKをインストールすると良い．マニュアルはこちら（https://cloud.google.com/sdk/docs/quickstart-linux）
+    -- 1. SDK（.tar.gz形式）をダウンロードして解凍し，install.shを実行する
+
+ ## GPUの割当て
+ - 1.GCCコンソールのIAM & Adminから，Edit QUOTASを選択．
+ - 2.
+
+ ## プロジェクト作成 〜 の一連流れ
+    -- 1. SDKを初期化してユーザー認証(gcloud init)
+    -- 2. 今存在するプロジェクトの確認(gcloud projects list)
+    -- 3. 対象がなければプロジェクトを作成（gcloud projects create kaggle-calculation）
+    ※不要なプロジェクトを消去する時は,GCCコンソール上から行うしかなさそう．
+    -- 4. デフォルトのプロジェクト選択（gcloud config set project <project name>）
+    -- 5. 使えるインスタンスを確認（gcloud compute instances list）
+    -- 6. インスタンスを作成する．最初はGPUの割当てが0になってるので手続きして使えるGPU増やして置くこと．プリエンティブルGPU（24時間以内の利用/GCEからの応答ない時にシャットダウン）を使えば通常GPUの料金よりも半額程度で使う事が出来る．GPUを酷使する予定がなければ最初はプリエンティブル期間でいいだろう．
+    -- 7. こちら（https://qiita.com/SXDSIR2020/items/060806d9fc4366c58d40）を参考に,インスタンスを作成．VNC接続用ファイヤーフォール設定 & GCEでGPU付VMインスタンスを設定する．
+    -- 8. こちら（https://qiita.com/SXDSIR2020/items/060806d9fc4366c58d40）を参考に，VMインスタンスにVNC接続用設定を行う．やる事はGCCコンソールのSSH接続画面から，デスクトップ環境の用意 & VNCサーバーインストール & VNC接続の確認の３つを行う．
+    -- 9. こちら（https://qiita.com/lain21/items/a33a39d465cd08b662f1）を参考にCUDAが既に入った「マシンイメージ」をベースにする．Deployボタンでインスタンス作成可能．
+        (設定する事)
+        Deployment name：インスタンス名.ローカルからこの名前を使ってssh接続可能
+        Machine type : GPUとストレージ以外のマシンスペックを設定可能．
+        GPUs : GPUの数と種類を決める事が出来る．コア数に応じて設定すべきGPU下限が決まってるので，少ないGPUで済ませたい場合はコア数の少ないGPUを選ぶ．
+        Framework : CUDAのバージョン決定可能．他パッケージも入れてくれるけど，あとでdockerを使って環境構築するならここは気にしなくても良い．
+        GPU （チェックボックス）：必須．これにチェック入れるとGPU driverを予めいんすつオールしてくれる．
+        price : ここで1ヶ月立ち上げっぱなしにした時の値段確認可能．
+        storage type : 画像データ等大きいものはSSDを選択してIOを早くしておくと良いだろう．
+
+## 作業中に他使うと思われるgloudコマンド
+- gcloud compute instances start <your-instance-name> : インスタンス起動
+- gcloud compute instances stop <your-instance-name>：インスタンス停止
+
+- gcloud compute ssh <your-instance-name> : インスタンスにssh接続
+
+- gcloud compute copy-files <local-path> <your-instance-name>:<remote-path> --zone <zone> : ローカル -> インスタンスにファイルコピー
+- gcloud compute copy-files <your-instance-name>:<remote-path> <local-path> --zone <zone> : インスタンス -> ローカルにファイルコピー
+
+## tensorflow-gpuのインストール
+- nvidia-dockerを使えば, NVIDIAのグラフィックドライバがあれば，NVIDIAツールキット（CUDAやcuDNN）をインストールせずにGPU対応のtensorflowを使う事が可能．
+- こちら（https://github.com/NVIDIA/nvidia-docker）からnvidia-dockerをインストール..ベースのオペレーティングシステムはubuntu18.04で良いと思う．
+
+## ★次回のtodo
+1. cpuだけのインスタンスを作成しGUIツールは入れずにssh接続出来るようにする．
+    - 参考URL：https://qiita.com/lain21/items/a33a39d465cd08b662f1
+    - Error内容：
+2. dockerを設定してthinkpadの環境を複製出来るか試して見る．
+    - 参考URL：https://qiita.com/kyohmizu/items/5f1929a2e949a9fa0da8
+
+3. gpuインスタンスにssh接続し，nvidia-dockerを入れてimport tensorflow出来るようにする．
+

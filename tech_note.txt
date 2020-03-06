@@ -1,0 +1,38 @@
+﻿# git bash
+・git bashからpython対話モードに入ろうとすると"winpty python"が必要。.bashrcにaliasを書いておくとよい。
+・ipythonをpipでインストールするとgit bashのほうからもアクセスが可能になる。
+
+# docker 
+docker for windows 
+・Hyper-Vに対応しているWindows10 Pro / Windows Enterpliseしか対応していない。
+- 
+
+# pythonのインストール
+・バージョンには気を付けること
+https://stackoverflow.com/questions/38896424/tensorflow-not-found-using-pip
+
+#環境構築
+・anacondaは今回SpinviewやNIPとの兼ね合いもあるので入れないことにした。
+・tensorflow1系を入れるには、pythonのバージョンは3.7以下でないといけない
+
+参考URL：
+https://qiita.com/fulcrum/items/ad6719d47b5c33ded241:対応関係がかなりあいまいで、子供のバージョンまでしっかり揃えないと動かない時がある。
+https://qiita.com/rhene/items/31bf4713b9dbda28bcc1
+https://qiita.com/JUN_NETWORKS/items/cc78f0c55c67081b44a7
+https://qiita.com/unnonouno/items/3a7c7861cbe2a600543d : cudnnとcudaの配置の仕方について
+https://qiita.com/chin_self_driving_car/items/f00af2dbd022b65c9068：tensorflow-gpu / cuda / cudnn の組み合わせ
+
+①自分分のGPUに対応するドライバのチェック
+→ https://www.nvidia.co.jp/Download/index.aspx?lang=jp
+→ ドライバーのバージョンは442.50
+②バージョンの対応を確認
+→ https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+③インストール
+→ https://www.tensorflow.org/install/source#common_installation_problems
+→ CUDAインストールしたらnvccコマンドが叩けるようになる。
+
+# コマンド
+* which (コマンド名)でそのコマンドがどこにあるかわかる。
+* 例えばdocker toolboxをwindowsにインストールしたとき、which dockerとしたときの出力は”/c/Program Files/Docker Toolbox/docker"
+
+結果的に、python = 3.6.8 / tensorflow-gpu =　1.12 / cuda = 9.0 / cudnn = 7.4

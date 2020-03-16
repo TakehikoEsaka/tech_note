@@ -48,12 +48,64 @@
 - nvidia-dockerを使えば, NVIDIAのグラフィックドライバがあれば，NVIDIAツールキット（CUDAやcuDNN）をインストールせずにGPU対応のtensorflowを使う事が可能．
 - こちら（https://github.com/NVIDIA/nvidia-docker）からnvidia-dockerをインストール..ベースのオペレーティングシステムはubuntu18.04で良いと思う．
 
+## リモートマシン用のvscode開発
+
+## .ssh/config
+・リモートへのssh接続方法を定義する。
+
+・sshの接続方式を定義出来る。下のHostは複数用意出来る。
+Host 任意の接続名(__hogeのようにアンダーバーを付けとくと補完から呼べる) : ※ location.host = "localhost:3000"のように、任意の名前或いはポート番号を含めた名前を指す
+ HostName ホスト名 : ※ location.hostname  = "localhost"（ポート番号無し）
+ User ユーザー名：どのユーザーで接続するか
+ Port ポート番号：デフォルトは22だけど、異なる場合で接続する際に使う
+ IdentityFile 鍵へのPATH(例えば~/.ssh/hoge.key)
+ 
+・サーバーへ定期的(今回は60秒毎)に生きている報告をする(全体的に記述を有効にする場合は先頭辺りに書いておくといい)
+ServerAliveInterval 60
+
+## entrypointについて
+・読み物：https://docker.open-code.club/CMD%E3%81%A8ENTRYPOINT%E3%81%AE%E9%81%95%E3%81%84.html
+・DockerfileのCMD指令とENTRYPOINT指令は、コンテナ起動時に実行されるプログラム(コマンド)を指定する。(RUNはビルド時に実行される。)
+
+・CMDとENTRYPOINTについて
+両方を併用する場合、単独で使用する場合、コンテナ作成時にコマンド引数を渡す場合(docker createの後端のコマンド部分)、shell形式とexec形式の違いなどと、ケースによって動作が異なる。
+以下の優先順でCMDとENTRYPOINTを決める。
+１．ENTRYPOINT(shell形式): (他はあっても無視)
+２．ENTRYPOINT(exec形式)の引数として、コンテナ作成時コマンド引数を付加
+３．ENTRYPOINT(exec形式)の引数として、CMDを付加
+４．ENTRYPOINT(exec形式)
+５．コンテナ作成時コマンド
+６．CMD
+（ENTRYPOINTは--entrypointで変更可能。CMDもENTRYPOINTも、複数回使っても最後の一つがそれぞれ有効）
+（shell形式は通常のコマンドを書く。exec形式はリストのような書き方をする）
+
+目的別で分類すると以下のようになる。
+CMD単独: 変更可能なデフォルトコマンド
+ENTRYPOINT(shell形式)単独: 実行必須コマンド
+ENTRYPOINT(exec形式)単独: 引数を追加可能な実行必須コマンド
+CMDとENTRYPOINT(exec形式)併用: 引数を変更可能な実行必須コマンド
+
+# リモートでjupyterを利用する
+https://qiita.com/tk_01/items/307716a680460f8dbe17
+jupyterは
+
+# リモートでVScodeを利用する
+vscodeのremote拡張機能を入れると接続が出来るようになる。ファイル送信がいちいちいらないので便利
+
+# dockerソケットとは
+https://www.ogis-ri.co.jp/otc/hiroba/technical/docker/part6.html
+
 ## ★次回のtodo
 1. cpuだけのインスタンスを作成しGUIツールは入れずにssh接続出来るようにする．
     - 参考URL：https://qiita.com/lain21/items/a33a39d465cd08b662f1
     - Error内容：
 2. dockerを設定してthinkpadの環境を複製出来るか試して見る．
     - 参考URL：https://qiita.com/kyohmizu/items/5f1929a2e949a9fa0da8
+    (https://www.ogis-ri.co.jp/otc/hiroba/editors/ : 自然言語についてのブログが参考になる)
 
 3. gpuインスタンスにssh接続し，nvidia-dockerを入れてimport tensorflow出来るようにする．
 
+## リモートデスクトップの使い方
+https://www.pc-koubou.jp/magazine/9725
+・windowsは繋がれる側がリモートデスクトップに対応していればOK
+・接続する側がクライアント、接続される側がホスト
